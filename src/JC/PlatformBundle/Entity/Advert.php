@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Advert
 {
+
     /**
      * @var int
      *
@@ -21,6 +22,11 @@ class Advert
      */
     private $id;
 
+    /**
+     * @ORM\Column(name="published", type="boolean")
+     */
+    private $published = true;
+    
     /**
      * @var \DateTime
      *
@@ -49,6 +55,10 @@ class Advert
      */
     private $content;
 
+     public function __construct()
+    {
+        $this->date = new \Datetime();
+    }
 
     /**
      * Get id
@@ -59,6 +69,7 @@ class Advert
     {
         return $this->id;
     }
+
 
     /**
      * Set date
@@ -155,5 +166,28 @@ class Advert
     {
         return $this->content;
     }
-}
 
+    /**
+     * Set published
+     *
+     * @param boolean $published
+     *
+     * @return Advert
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+}

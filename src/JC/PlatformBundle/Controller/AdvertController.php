@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 //use Symfony\src\JC\PlatformBundle\Entity\Article;
 //use Symfony\Component\Form\Extension\Core\Type\TextType;
 //use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use JC\PlatformBundle\Entity\Advert;
 
 class AdvertController extends Controller
 {
@@ -42,7 +43,7 @@ class AdvertController extends Controller
 	public function addAction(Request $request)
 	{
 
-		$antispam = $this->container->get('jc_platform.antispam');
+		/*$antispam = $this->container->get('jc_platform.antispam');
 
 		$text = 'f';
 
@@ -51,13 +52,26 @@ class AdvertController extends Controller
 			throw new \Exception('votre message est un spam');
 		}
 
-		return new Response('le message n\' est pas un spam');
-		/*if($request->isMethod('POST'))
+		return new Response('le message n\' est pas un spam');*/
+		$advert = new Advert();
+		$advert->setTitle('Recherche developpeur symfony');
+		$advert->setAuthor('alexandre');
+		$advert->setContent("nousfdfjdfd dfjdsfkldsffj  jdfjdsfl dsfjdslf j dfsdfjjdslfj sdfkl df sd df dsf");
+
+		$em = $this->getDoctrine()->getManager();
+
+		$em->persist($advert);
+
+		$em->flush();
+
+		if($request->isMethod('POST'))
 		{
 			$request->getSession()->getFlashBag()->add('notice','Annonce bien enregistree');
 
 			return $this->render('JCPlatformBundle:Advert:add.html.twig');
-		}*/
+		}
+
+		return $this->render('JCPlatformBundle:Advert:add.html.twig', array('advert' => $advert));
 	}
 
 	public function deleteAction($id)
