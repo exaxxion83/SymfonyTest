@@ -1,7 +1,7 @@
 
 <?php
 
-namespace JCPlatformBundle;
+namespace JC\PlatformBundle\Entity;
 
 
 class Article
