@@ -1,0 +1,5 @@
+jc_platform:
+    resource: "@JCPlatformBundle/Resources/config/routing.yml"
+    prefix:   /platform
+
+
