@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 //use Symfony\Component\Form\Extension\Core\Type\TextType;
 //use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use JC\PlatformBundle\Entity\Advert;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller
 {
@@ -25,10 +26,22 @@ class AdvertController extends Controller
 	public function viewAction($id)
 	{
 
+		$repository = $this->getDoctrine()->getManager()->getRepository('JCPlatformBundle:Advert');
+
+		$advert = $repository->find($id);
+
+		if(null === $advert)
+		{
+			throw new NotFoundHttpException("L'annonce n'existe pas ");
+		}
+
 		return $this->render('JCPlatformBundle:Advert:view.html.twig', array(
+			'advert' => $advert->getId($id) 
+			));
+		/*return $this->render('JCPlatformBundle:Advert:view.html.twig', array(
 			'id' => $id
 			));
-		/*$tag = $request->query->get('tag');
+		$tag = $request->query->get('tag');
 
 		return new Response($tag);*/
 
@@ -71,7 +84,7 @@ class AdvertController extends Controller
 			return $this->render('JCPlatformBundle:Advert:add.html.twig');
 		}
 
-		return $this->render('JCPlatformBundle:Advert:add.html.twig', array('advert' => $advert));
+		return $this->render('JCPlatformBundle:Advert:add.html.twig', array('advert' => $advert->getId()));
 	}
 
 	public function deleteAction($id)
